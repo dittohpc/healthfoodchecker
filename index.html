@@ -97,5 +97,24 @@ function render(match) {
   document.getElementById('search').addEventListener('change', searchFood);
   init();
   </script>
+<script>
+// Improved mobile-friendly typeahead
+document.getElementById('search').addEventListener('input', function() {
+  const query = this.value.toLowerCase().trim();
+  const datalist = document.getElementById('foods');
+  datalist.innerHTML = "";
+  if (query.length < 2) return; // start suggesting after 2 letters
+  const matches = allFoods
+    .filter(row => row[1].toLowerCase().includes(query))
+    .slice(0, 10);
+  matches.forEach(row => {
+    const opt = document.createElement('option');
+    opt.value = row[1];
+    datalist.appendChild(opt);
+  });
+});
+</script>
+
+  
 </body>
 </html>
