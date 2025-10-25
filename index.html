@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Healthy Food Checker</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; text-align: center; }
+  input { width: 90%; padding: 10px; margin: 10px 0; border-radius: 6px; border: 1px solid #ccc; }
+  .card { border: 1px solid #ddd; padding: 16px; border-radius: 10px; margin-top: 16px; text-align: left; background: #f9f9f9; }
+  h2 { margin: 0 0 10px; }
+</style>
+</head>
+<body>
+  <h2>🥦 Healthy Food Checker</h2>
+
+  <input id="search" list="foods" type="text" placeholder="Enter a food (e.g., banana)" />
+  <datalist id="foods"></datalist>
+
+  <div id="result" class="card"></div>
+
+  <script>
+  const sheetID = '2PACX-1vQhnB5vMw6CHxaiX1DDO5k7g4Ox_yPZ3n5apNnJrzjAtTMJGANDuo8_jPWkT6mDZYUHGeOHRFOWtUE3';
+  const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json`;
+
+  let allFoods = [];
+
+  async function fetchData() {
+    const res = await fetch(url);
+    const text = await res.text();
+    const json = JSON.parse(text.substr(47).slice(0, -2));
+    const data = json.table.rows.map(r => r.c.map(c => c ? c.v : ""));
+    return data;
+  }
+
+  async function init() {
+    const data = await fetchData();
+    allFoods = data.slice(1); // skip header row
+    const foodList = document.getElementById('foods');
+    allFoods.forEach(row => {
+      const opt = document.createElement('option');
+      opt.value = row[1]; // Food is column 2 now (Category, Food, ...)
+      foodList.appendChild(opt);
+    });
+  }
+
+  function render(match) {
+    const html = `
+      <strong>${match[1]}</strong><br><br>
+      <b>Category:</b> ${match[0]}<br><br>
+      ✅/⚠️/❌ <b>High Cholesterol:</b> ${match[2]}<br>
+      ✅/⚠️/❌ <b>Heart Healthy:</b> ${match[3]}<br>
+      ✅/⚠️/❌ <b>High Blood Pressure:</b> ${match[4]}<br>
+      ✅/⚠️/❌ <b>Diabetes:</b> ${match[5]}<br><br>
+      <b>4 Healthy Alternatives:</b> ${match[6]}
+    `;
+    document.getElementById('result').innerHTML = html;
+  }
+
+  function searchFood() {
+    const query = document.getElementById('search').value.toLowerCase().trim();
+    const match = allFoods.find(row => (row[1] || "").toLowerCase() === query);
+    if (match) render(match);
+    else document.getElementById('result').innerHTML = "❌ Food not found. Try another!";
+  }
+
+  document.getElementById('search').addEventListener('change', searchFood);
+  init();
+  </script>
+</body>
+</html>
