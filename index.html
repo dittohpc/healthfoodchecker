@@ -76,14 +76,54 @@
   }
 
 function render(match) {
+  const sectionStyle = `
+    border-radius:10px;
+    padding:10px;
+    margin-bottom:12px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.08);
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
+  `;
+
+  const hoverEffect = `
+    this.style.transform='scale(1.02)';
+    this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)';
+  `;
+
+  const hoverReset = `
+    this.style.transform='scale(1)';
+    this.style.boxShadow='0 2px 6px rgba(0,0,0,0.08)';
+  `;
+
   const html = `
-    <strong style="font-size:1.2em;">${match[1]}</strong><br>
-    <b>Category:</b> ${match[0]}<br><br>
-    ${match[2]}<br>
-    ${match[3]}<br>
-    ${match[4]}<br>
-    ${match[5]}<br><br>
-    <b>4 Healthy Alternatives:</b> ${match[6]}
+    <div style="margin-bottom:10px;text-align:center;">
+      <strong style="font-size:1.4em;">${match[1]}</strong><br>
+      <b>Category:</b> ${match[0]}
+    </div>
+
+    <div style="background:#e8f6f3;${sectionStyle}" onmouseenter="${hoverEffect}" onmouseleave="${hoverReset}">
+      <h3 style="margin:4px 0;color:#0b7d5f;">💉 Diabetes</h3>
+      <p style="margin:4px 0;">${match[5]}</p>
+    </div>
+
+    <div style="background:#fff5e6;${sectionStyle}" onmouseenter="${hoverEffect}" onmouseleave="${hoverReset}">
+      <h3 style="margin:4px 0;color:#b36b00;">🧈 High Cholesterol</h3>
+      <p style="margin:4px 0;">${match[2]}</p>
+    </div>
+
+    <div style="background:#eaf4fc;${sectionStyle}" onmouseenter="${hoverEffect}" onmouseleave="${hoverReset}">
+      <h3 style="margin:4px 0;color:#0b4fb3;">❤️ Heart Healthy</h3>
+      <p style="margin:4px 0;">${match[3]}</p>
+    </div>
+
+    <div style="background:#fceaea;${sectionStyle}" onmouseenter="${hoverEffect}" onmouseleave="${hoverReset}">
+      <h3 style="margin:4px 0;color:#a10b0b;">💓 High Blood Pressure</h3>
+      <p style="margin:4px 0;">${match[4]}</p>
+    </div>
+
+    <div style="background:#f6f6f6;${sectionStyle}" onmouseenter="${hoverEffect}" onmouseleave="${hoverReset}">
+      <h3 style="margin:4px 0;color:#333;">🥗 4 Healthy Alternatives</h3>
+      <p style="margin:4px 0;">${match[6]}</p>
+    </div>
   `;
   document.getElementById('result').innerHTML = html;
 }
