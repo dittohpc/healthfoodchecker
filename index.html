@@ -43,18 +43,19 @@
     });
   }
 
-  function render(match) {
-    const html = `
-      <strong>${match[1]}</strong><br><br>
-      <b>Category:</b> ${match[0]}<br><br>
-      ✅/⚠️/❌ <b>High Cholesterol:</b> ${match[2]}<br>
-      ✅/⚠️/❌ <b>Heart Healthy:</b> ${match[3]}<br>
-      ✅/⚠️/❌ <b>High Blood Pressure:</b> ${match[4]}<br>
-      ✅/⚠️/❌ <b>Diabetes:</b> ${match[5]}<br><br>
-      <b>4 Healthy Alternatives:</b> ${match[6]}
-    `;
-    document.getElementById('result').innerHTML = html;
-  }
+function render(match) {
+  const html = `
+    <strong style="font-size:1.2em;">${match[1]}</strong><br>
+    <b>Category:</b> ${match[0]}<br><br>
+    ${match[2]}<br>
+    ${match[3]}<br>
+    ${match[4]}<br>
+    ${match[5]}<br><br>
+    <b>4 Healthy Alternatives:</b> ${match[6]}
+  `;
+  document.getElementById('result').innerHTML = html;
+}
+
 
   function searchFood() {
     const query = document.getElementById('search').value.toLowerCase().trim();
