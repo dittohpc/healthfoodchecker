@@ -19,8 +19,9 @@
   <div id="result" class="card"></div>
 
   <script>
-  const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQhnB5vMw6CHxaiX1DDO5k7g4Ox_yPZ3n5apNnJrzjAtTMJGANDuo8_jPWkT6mDZYUHGeOHRFOWtUE3/gviz/tq?tqx=out:json";
-
+  const sheetID = '1znwPW9eEP-7PFLf2G-za_ftmz-e13JTg3PSujrPqnGA'; // your real ID
+  const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json`;
+   
   let allFoods = [];
 
   async function fetchData() {
